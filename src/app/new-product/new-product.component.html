@@ -2,6 +2,9 @@
   <div fxFlex="33"></div>
   <div fxFlex="33" class="card">
     <mat-card>
+
+
+        <img src="https://www.cukashmir.ac.in/facultyimages/2316218245609profile-default-male.png" max-height="50" class="center">
       <form #newProductForm="ngForm">
         <mat-form-field class="input-field">
           <input class="input-field" matInput placeholder="Pick Up Location" #pickUpSearch required>
@@ -38,7 +41,7 @@
         </mat-form-field>
 
         <button mat-raised-button color="primary"
-                (click)="addNewProduct()" [disabled]="!newProductForm.valid">Register</button>
+                (click)="addNewProduct()" [disabled]="!newProductForm.valid" class="reg-btn">Register</button>
       </form>
     </mat-card>
   </div>

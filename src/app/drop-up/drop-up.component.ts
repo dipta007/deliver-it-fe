@@ -21,6 +21,8 @@ export class DropUpComponent implements OnInit {
         tmp.dropOffLocation = item.dropOffLocation;
         tmp.dropOffTime = item.dropOffTime;
         tmp._id = item._id;
+        tmp.lat = item.pickUpCoord.lat;
+        tmp.lng = item.pickUpCoord.lng;
 
         this.deliverablesToDrop.push(tmp);
       });

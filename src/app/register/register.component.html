@@ -2,6 +2,9 @@
     <div fxFlex="33"></div>
     <div fxFlex="33" class="card">
       <mat-card>
+
+
+
         <form #registerForm="ngForm">
           <mat-form-field class="input-field">
             <input matInput placeholder="Full Name" [(ngModel)]="user.fullName" type="text" name="fullName" required>
@@ -31,7 +34,7 @@
           </mat-form-field>
   
           <button mat-raised-button color="primary"
-                  (click)="register()" [disabled]="!registerForm.valid">Register</button>
+                  (click)="register()" [disabled]="!registerForm.valid" class="reg-btn">Register</button>
         </form>
       </mat-card>
     </div>

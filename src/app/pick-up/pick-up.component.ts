@@ -19,8 +19,10 @@ export class PickUpComponent implements OnInit {
       res.forEach(item => {
         var tmp = <any>{};
         tmp.pickUpLocation = item.pickUpLocation;
-        tmp.pickUpTime = item.pickUpLocation;
+        tmp.pickUpTime = item.pickUpTime;
         tmp._id = item._id;
+        tmp.lat = item.pickUpCoord.lat;
+        tmp.lng = item.pickUpCoord.lng;
 
         this.deliverablesToPick.push(tmp);
       });
