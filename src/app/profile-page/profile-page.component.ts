@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
+import { AppRestService } from '../app.rest.service'
 
 @Component({
   selector: 'app-profile-page',
@@ -9,13 +10,25 @@ import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              public appRestService: AppRestService) { }
 
   ngOnInit() {
     if(this.activatedRoute.snapshot.params.id) {
       //TODO: call by the user id
+      this.appRestService.getUserById(this.activatedRoute.snapshot.params.id).subscribe((res) => {
+        var tmp = res['user'];
+        this.user.fullName = tmp['fullName']
+        this.user.email = tmp['email']
+        this.user.phoneNo = tmp['phoneNo']
+      })
     } else {
-      // TODO: call by the token
+      this.appRestService.getUserByToken().subscribe((res) => {
+        var tmp = res['user'];
+        this.user.fullName = tmp['fullName']
+        this.user.email = tmp['email']
+        this.user.phoneNo = tmp['phoneNo']
+      })
     }
   }
 

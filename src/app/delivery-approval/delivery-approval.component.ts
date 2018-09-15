@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material"
 import {AreYouSureComponent} from "../are-you-sure/are-you-sure.component"
+import { AppRestService } from '../app.rest.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-delivery-approval',
@@ -11,48 +13,29 @@ import {AreYouSureComponent} from "../are-you-sure/are-you-sure.component"
 export class DeliveryApprovalComponent implements OnInit {
 
   constructor(private router: Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private appRestService: AppRestService) { }
 
+  deliveryRequests = []
   ngOnInit() {
+    this.appRestService.getPendingDeliveries().subscribe(res => {
+      debugger
+      res.forEach(item => {
+        var tmp = <any>{};
+        tmp.pickUpLocation = item.pickUpLocation;
+        tmp.pickUpTime = item.pickUpTime;
+        tmp.dropOffLocation = item.dropOffLocation;
+        tmp.dropOffTime = item.dropOffTime;
+        tmp.delivererId = item.delivererId;
+        tmp._id = item._id;
+
+        this.deliveryRequests.push(tmp);
+      });
+    })
   }
 
-  deliveryRequests = [
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    }
-  ]
-
   goToProfileDetails(product: any) {
-    this.router.navigate(['/user', 'asda'])
+    this.router.navigate(['/user', product.delivererId])
   }
 
   approve(product: any) {
@@ -63,8 +46,11 @@ export class DeliveryApprovalComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.status) {
-        // TODO:
+        this.appRestService.changeDeliveryRequestStatus(product._id, "assigned").subscribe(res => {
+          this.ngOnInit()
+        })
       }
+
     })
   }
 }

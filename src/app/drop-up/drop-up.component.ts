@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AreYouSureComponent } from '../are-you-sure/are-you-sure.component'
 import { MatDialog } from '@angular/material';
+import { AppRestService } from '../app.rest.service';
 
 @Component({
   selector: 'app-drop-up',
@@ -9,37 +10,22 @@ import { MatDialog } from '@angular/material';
 })
 export class DropUpComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              public appRestService: AppRestService) { }
 
+  deliverablesToDrop = []
   ngOnInit() {
-  }
+    this.appRestService.getDropUp().subscribe(res => {
+      res.forEach(item => {
+        var tmp = <any>{};
+        tmp.dropOffLocation = item.dropOffLocation;
+        tmp.dropOffTime = item.dropOffTime;
+        tmp._id = item._id;
 
-  deliverablesToDrop = [
-    {
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    },
-    {
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    },
-    {
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    }
-  ]
+        this.deliverablesToDrop.push(tmp);
+      });
+    })
+  }
 
   goToMap(lat, lng) {
     var googleUrl = "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng;
@@ -56,6 +42,10 @@ export class DropUpComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result.status) {
         // TODO:
+        this.appRestService.changeDeliveryRequestStatus(product._id, "delivered").subscribe(res => {
+          this.deliverablesToDrop.length = 0;
+          this.ngOnInit();
+        })
       }
     })
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { AppRestService } from '../app.rest.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-deliveries',
@@ -8,46 +10,28 @@ import { MatDialog } from '@angular/material';
 })
 export class DeliveriesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private appRestService: AppRestService) { }
 
+  deliveryRequests = []
   ngOnInit() {
+      this.appRestService.getAllDeliveries().subscribe(res => {
+        res.forEach(item => {
+          var tmp = <any>{};
+          tmp.pickUpLocation = item.pickUpLocation;
+          tmp.pickUpTime = item.pickUpTime;
+          tmp.dropOffLocation = item.dropOffLocation;
+          tmp.dropOffTime = item.dropOffTime;
+          tmp.status = item.status;
+
+          this.deliveryRequests.push(tmp)
+        });
+        debugger
+      })
   }
 
-  deliveryRequests = [
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36,
-      status: "Pending"
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36,
-      status: "Delivered"
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      pickUpLocation: "chittagong",
-      pickUpTime: new Date(),
-      dropOffLocation: "dhaka",
-      dropOffTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    }
-  ]
+  // TODO:
+  // UI issue in this page
+
+
 
 }

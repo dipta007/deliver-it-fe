@@ -2,6 +2,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader } from "@agm/core"
 import { Router } from '@angular/router'
+import {AppRestService} from '../app.rest.service'
 
 export interface ProductRequestData {
   pickUpLocation: String,
@@ -53,7 +54,8 @@ export class NewProductComponent implements OnInit {
 
   constructor(private mapsApiLoader: MapsAPILoader,
               private ngZone: NgZone,
-              private router: Router) { 
+              private router: Router,
+              private appRestService: AppRestService) { 
 
     this.mapsApiLoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.pickUpSearch.nativeElement, {
@@ -69,6 +71,8 @@ export class NewProductComponent implements OnInit {
             return;
           }
           //set latitude, longitude and zoom
+          debugger
+          this.newProduct.pickUpLocation = place.formatted_address;
           this.newProduct.pickUpCoord.lat = place.geometry.location.lat();
           this.newProduct.pickUpCoord.lng = place.geometry.location.lng();
         });
@@ -89,6 +93,7 @@ export class NewProductComponent implements OnInit {
             return;
           }
           //set latitude, longitude and zoom
+          this.newProduct.dropOffLocation = place.formatted_address;
           this.newProduct.dropOffCoord.lat = place.geometry.location.lat();
           this.newProduct.dropOffCoord.lng = place.geometry.location.lng();
         });
@@ -105,6 +110,10 @@ export class NewProductComponent implements OnInit {
   }
 
   addNewProduct() {
-    
+    this.appRestService.addNewDelivery(this.newProduct).subscribe(res => {
+      // window.location.href 
+      // delete this.newProduct
+      // TODO:
+    })
   }
 }

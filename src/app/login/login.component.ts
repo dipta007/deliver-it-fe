@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import { LogInRestService } from './login.rest.service';
+import {AppRestService} from '../app.rest.service'
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router'
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     "Customer"
   ]
   
-  constructor(private logInRestService: LogInRestService,
+  constructor(private appRestService: AppRestService,
               private cookieService: CookieService,
               private router: Router) { }
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   logIn() {
     if(this.user.email && this.user.password) {
-      return this.logInRestService.logInUser(this.user.email, this.user.password).subscribe(response => {
+      return this.appRestService.logInUser(this.user.email, this.user.password).subscribe(response => {
         this.cookieService.set('token', response['token']);
         if(this.user.role == "Customer") {
           this.router.navigate(['/customer'])

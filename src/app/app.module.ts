@@ -110,6 +110,7 @@ import { NewProductComponent } from './new-product/new-product.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { SideNavAdminComponent } from './side-nav-admin/side-nav-admin.component';
 import { DeliveryApprovalComponent } from './delivery-approval/delivery-approval.component';
+import { AppRestService } from './app.rest.service'
 
 const appRoutes: Routes = [
   { path: '', component: StartScreenComponent },
@@ -163,6 +164,7 @@ const appRoutes: Routes = [
   providers: [
     LogInRestService,
     RegisterRestService,
+    AppRestService,
     CookieService
   ]
 })

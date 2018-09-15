@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material"
 import { AreYouSureComponent } from '../are-you-sure/are-you-sure.component'
+import { AppRestService } from '../app.rest.service'
 
 @Component({
   selector: 'app-pick-up',
@@ -9,37 +10,22 @@ import { AreYouSureComponent } from '../are-you-sure/are-you-sure.component'
 })
 export class PickUpComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              public appRestService: AppRestService) { }
 
+  deliverablesToPick = []
   ngOnInit() {
-  }
+    this.appRestService.getPickUp().subscribe(res => {
+      res.forEach(item => {
+        var tmp = <any>{};
+        tmp.pickUpLocation = item.pickUpLocation;
+        tmp.pickUpTime = item.pickUpLocation;
+        tmp._id = item._id;
 
-  deliverablesToPick = [
-    {
-      pickUpLocation: "dhaka",
-      pickUpTime: new Date(),
-      lat: 23.75,
-      lng: 90.36
-    },
-    {
-      pickUpLocation: "dhaka",
-      pickUpTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    },
-    {
-      pickUpLocation: "dhaka",
-      pickUpTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    },
-    {
-      pickUpLocation: "dhaka",
-      pickUpTime: new Date(),
-      lat: 1.23,
-      lng: 2.54
-    }
-  ]
+        this.deliverablesToPick.push(tmp);
+      });
+    })
+  }
 
   goToMap(lat, lng) {
     var googleUrl = "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng;
@@ -55,7 +41,10 @@ export class PickUpComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.status) {
-        // TODO:
+        this.appRestService.changeDeliveryRequestStatus(product._id, "picked").subscribe(res => {
+          this.deliverablesToPick.length = 0;
+          this.ngOnInit();
+        })
       }
     })
   }

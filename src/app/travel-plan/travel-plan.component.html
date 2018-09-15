@@ -56,3 +56,12 @@
     </agm-map>
 
     <button class="margin-top-40" mat-raised-button color="primary" (click)="find()" >Find</button>
+
+    <mat-nav-list *ngIf="canDeliver.length > 0">
+      <h3 matSubheader>Do you want request to deliver...</h3>
+      <mat-list-item *ngFor="let product of canDeliver">
+        <h2 mat-line><strong>{{product.pickUpLocation}} - {{product.dropOffLocation}}</strong></h2>
+        <p mat-line>{{product.pickUpTime | date}} - {{product.dropOffTime | date}}</p>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-nav-list>

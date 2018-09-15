@@ -127,9 +127,28 @@ export class TravelPlanComponent implements OnInit {
     this.toLoc.circleRadius = rad;
   }
 
+  prepare() {
+    return {
+      from: {
+        lat: this.fromLoc.lat,
+        lng: this.fromLoc.lng,
+        rad: this.fromLoc.circleRadius,
+        time: this.fromLoc.date
+      },
+      to: {
+        lat: this.toLoc.lat,
+        lng: this.toLoc.lng,
+        rad: this.toLoc.circleRadius,
+        time: this.toLoc.date
+      }
+    }
+  }
+
+  canDeliver = [];
 
   find() {
 
+    
 
     this.router.navigate(['/delivery-request'])
   }

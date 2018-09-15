@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import { RegisterRestService } from './register.rest.service';
+import {AppRestService} from '../app.rest.service'
 import { Router } from '@angular/router'
 
 @Component({
@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
     phoneNo: ""
   }
 
-  constructor(private registerRestService: RegisterRestService,
+  constructor(private appRestService: AppRestService,
               private router: Router) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
   register() {
     if(this.user.fullName && this.user.email && this.user.password && this.user.passwordAgain && this.user.password == this.user.passwordAgain) {
       let payload = this.prepare();
-      this.registerRestService.registerUser(payload).subscribe((res) => {
+      this.appRestService.registerUser(payload).subscribe((res) => {
         if(res) {
           this.router.navigate(['/login'])
         }
