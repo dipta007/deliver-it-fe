@@ -1,0 +1,12 @@
+<mat-nav-list>
+  <h3 matSubheader>Products to be picked....</h3>
+  <mat-list-item *ngFor="let product of deliverablesToPick" (click)=completeIt(product)>
+    <h2><strong>{{product.pickUpLocation}}</strong></h2>
+    <p mat-line>{{product.pickUpTime | date}}</p>
+    <span matLine>Click here to mark it as completed....</span>
+    <button mat-icon-button (click)="goToMap(product.lat, product.lng)">
+      <mat-icon>directions</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>

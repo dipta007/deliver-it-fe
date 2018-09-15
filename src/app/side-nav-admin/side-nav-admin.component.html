@@ -1,0 +1,26 @@
+<div class="mat-app-background basic-container">
+    <mat-sidenav-container class="container">
+      <mat-sidenav #sidenav [mode]="over">
+        <div class="sidebar-btn-parent">
+          <div class="sidebar-btn">
+            <button mat-button (click)="sidenav.toggle()">
+                <mat-icon>home</mat-icon>
+            </button>
+          </div>
+          <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 1; sidenav.toggle()">Add New</button></div>
+          <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 2; sidenav.toggle()">Approval</button></div>
+          <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 3; sidenav.toggle()">Status</button></div>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <button mat-button (click)="sidenav.toggle()">
+            <mat-icon>home</mat-icon>
+        </button>
+        <div>
+          <app-new-product *ngIf="id == 1"></app-new-product>
+          <app-deliveries *ngIf="id == 3"></app-deliveries> 
+          <app-delivery-approval *ngIf="id == 2"></app-delivery-approval>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>

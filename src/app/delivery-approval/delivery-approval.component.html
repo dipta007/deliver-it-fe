@@ -1,0 +1,13 @@
+<mat-nav-list>
+  <h3 matSubheader>Product delivery Status</h3>
+  <mat-list-item *ngFor="let product of deliveryRequests" (click)="approve(product)">
+    <h2 mat-line><strong>{{product.pickUpLocation}} - {{product.dropOffLocation}}</strong></h2>
+    <p mat-line>{{product.pickUpTime | date}} - {{product.dropOffTime | date}}</p>
+    <p mat-line>Click here to approve the delivery</p>
+    <button mat-button (click)="goToProfileDetails(product)">
+        Details
+        <mat-icon>person</mat-icon>
+      </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>

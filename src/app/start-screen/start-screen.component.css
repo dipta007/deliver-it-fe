@@ -1,0 +1,35 @@
+.mt-card {
+    max-width: 400px;
+    margin-top: 40vh;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.max-height-200 {
+    max-height: 200px;
+}
+
+.margin-right-20 {
+    margin-right: 20px;
+}
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column
+}
+
+.card_child {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row
+}
+
+.card_child_l2 {
+    justify-content: space-between
+    /* justify-content:  */
+}

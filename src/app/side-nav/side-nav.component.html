@@ -1,0 +1,29 @@
+<div class="mat-app-background basic-container">
+  <mat-sidenav-container class="container">
+    <mat-sidenav #sidenav [mode]="over">
+      <div class="sidebar-btn-parent">
+        <div class="sidebar-btn">
+          <button mat-button (click)="sidenav.toggle()">
+              <mat-icon>home</mat-icon>
+          </button>
+        </div>
+        <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 1; sidenav.toggle()">Profile</button></div>
+        <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 3; sidenav.toggle()">Pick Up</button></div>
+        <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 4; sidenav.toggle()">Drop Off</button></div>
+        <div class="sidebar-btn"><button mat-raised-button color="primary" (click)="id = 5; sidenav.toggle()">Travel Plan</button></div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <button mat-button (click)="sidenav.toggle()">
+          <mat-icon>home</mat-icon>
+      </button>
+      <div>
+        <app-profile-page *ngIf="id == 1"></app-profile-page>
+        <app-pick-up *ngIf="id == 3"></app-pick-up>
+        <app-drop-up *ngIf="id == 4"></app-drop-up>
+        <app-travel-plan *ngIf="id == 5"></app-travel-plan>
+
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

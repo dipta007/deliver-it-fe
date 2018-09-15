@@ -1,0 +1,39 @@
+<div fxLayout="row" fxLayout.xs="column"fxFlexFill>
+    <div fxFlex="33"></div>
+    <div fxFlex="33" class="card">
+      <mat-card>
+        <form #registerForm="ngForm">
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Full Name" [(ngModel)]="user.fullName" type="text" name="fullName" required>
+          </mat-form-field>
+
+        
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Email" [formControl]="emailFormControl" [(ngModel)]="user.email" type="email" name="email" required>
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Password" [(ngModel)]="user.password" type="password" name="password" required>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Password Again" [(ngModel)]="user.passwordAgain" type="password" name="passwordAgain" required>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <input matInput placeholder="Phone no" [(ngModel)]="user.phoneNo" type="text" name="phoneNo" required>
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary"
+                  (click)="register()" [disabled]="!registerForm.valid">Register</button>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  

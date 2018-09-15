@@ -1,0 +1,45 @@
+<div fxLayout="row" fxLayout.xs="column"fxFlexFill>
+  <div fxFlex="33"></div>
+  <div fxFlex="33" class="card">
+    <mat-card>
+      <form #newProductForm="ngForm">
+        <mat-form-field class="input-field">
+          <input class="input-field" matInput placeholder="Pick Up Location" #pickUpSearch required>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <input matInput [matDatepicker]="picker1" placeholder="Pick Up Day"
+                  (dateInput)="addEvent('pickUp', $event)" (dateChange)="addEvent('pickUp', $event)" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <input class="input-field" matInput placeholder="Drop Off Location" #dropOffSearch required>
+        </mat-form-field>
+          
+        <mat-form-field class="input-field">
+          <input matInput [matDatepicker]="picker2" placeholder="Drop Off Day"
+                  (dateInput)="addEvent('dropOff', $event)" (dateChange)="addEvent('dropOff', $event)" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Dimension" [(ngModel)]="newProduct.size" type="text" name="size" required>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Weight" [(ngModel)]="newProduct.weight" type="text" name="weight" required>
+        </mat-form-field>
+
+        <mat-form-field class="input-field">
+          <input matInput placeholder="Additional Information" [(ngModel)]="newProduct.info" type="text" name="info" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary"
+                (click)="addNewProduct()" [disabled]="!newProductForm.valid">Register</button>
+      </form>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+
+  <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+    <div fxFlex="60">
+      <mat-form-field class="input-field">
+        <input class="input-field" matInput placeholder="Current Location" #searchFrom>
+      </mat-form-field>
+    </div>
+    <div fxFlex="20" class="margin-left-20 margin-top-20">
+      <span>Radius: {{fromLoc.circleRadius}} meters</span>
+    </div>
+    <mat-form-field fxFlex="20">
+      <input matInput [matDatepicker]="picker1" placeholder="Starting Day"
+             (dateInput)="addEvent('start', $event)" (dateChange)="addEvent('start', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <agm-map [latitude]="fromLoc.lat" [longitude]="fromLoc.lng" (mapClick)="clickOnMapFrom($event)" [zoom]="16">
+    <agm-marker *ngIf="fromLoc.markedInMap"  [latitude]="fromLoc.markerLat" [longitude]="fromLoc.markerLng"></agm-marker>
+    <agm-circle [latitude]="fromLoc.markerLat" [longitude]="fromLoc.markerLng" 
+        [radius]="fromLoc.circleRadius"
+        [fillColor]="'red'"
+        [circleDraggable]="true"
+        [editable]="true"
+        (radiusChange)="changeRadiusFrom($event)">
+    </agm-circle>
+  </agm-map>
+
+
+  <div class="margin-top-40"></div>
+  <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <div fxFlex="60">
+        <mat-form-field class="input-field">
+          <input class="input-field" matInput placeholder="Destination Location" #searchTo>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20" class="margin-left-20 margin-top-20">
+        <span>Radius: {{toLoc.circleRadius}} meters</span>
+      </div>
+      <mat-form-field fxFlex="20">
+        <input matInput [matDatepicker]="picker2" placeholder="Ending Day"
+               (dateInput)="addEvent('end', $event)" (dateChange)="addEvent('end', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <agm-map [latitude]="toLoc.lat" [longitude]="toLoc.lng" (mapClick)="clickOnMapTo($event)" [zoom]="16">
+      <agm-marker *ngIf="toLoc.markedInMap"  [latitude]="toLoc.markerLat" [longitude]="toLoc.markerLng"></agm-marker>
+      <agm-circle [latitude]="toLoc.markerLat" [longitude]="toLoc.markerLng" 
+          [radius]="toLoc.circleRadius"
+          [fillColor]="'red'"
+          [circleDraggable]="true"
+          [editable]="true"
+          (radiusChange)="changeRadiusTo($event)">
+      </agm-circle>
+    </agm-map>
+
+    <button class="margin-top-40" mat-raised-button color="primary" (click)="find()" >Find</button>

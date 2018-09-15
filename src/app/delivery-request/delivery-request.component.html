@@ -1,0 +1,12 @@
+<mat-nav-list>
+  <h3 matSubheader>Do you want request to deliver...</h3>
+  <mat-list-item *ngFor="let product of deliveryRequests">
+    <h2 mat-line><strong>{{product.pickUpLocation}} - {{product.dropOffLocation}}</strong></h2>
+    <p mat-line>{{product.pickUpTime | date}} - {{product.dropOffTime | date}}</p>
+    <button mat-button (click)="applyForIt(product)">
+      Details
+      <mat-icon>info</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>
